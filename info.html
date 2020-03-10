@@ -1,0 +1,186 @@
+<div class="container">
+<a href="https://cdpn.io/Refath/debug/zYGYQWE/YvMgOeRgOOOM"><div class="item block1">
+		<div class="back">
+
+		</div>
+	</div>			</a>
+	<div class="item block2">
+		<div class="infoBox">
+					<p>Location: <b><button onclick="search();" name="search">Confirm Location</button>
+<p id = "locationOutput">Awaiting Confirmation</p></b></p>
+			
+<button onclick="geoFindMe();">Retrieve Location</button><br>
+			<div class = "locInfo">Latitude: <p class = "lats" id = "outlat"></p>
+			Longitude: <p class = "longs" id = "outlong"></p></div>
+			Time: <p id = "time"><b></b></p>
+			<p>Estimated Wait Time: <b>35 Minutes</b></p>
+				</div>
+	</div>
+
+	<div class="item block3">
+<div id = "userLoc"></div>
+		</div>
+	</div>
+
+<script>
+const mymap = L.map('userLoc').setView([0,0], 1);
+
+const attribution = '&copy; <a href = "https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+const tiles = L.tileLayer(tileUrl,{attribution});
+tiles.addTo(mymap);
+
+
+function geoFindMe() {
+  var output = document.getElementById("outlat");
+  var output_Two = document.getElementById("outlong");
+
+  if (!navigator.geolocation){
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
+
+  function success(position) {
+    var latitude  = position.coords.latitude;
+    var longitude = position.coords.longitude;
+
+    output.innerHTML = output.innerHTML + '<b>' + latitude.toFixed(3) + '</b>';
+		output_Two.innerHTML = output_Two.innerHTML + '<b>' + longitude.toFixed(3) +'</b>';
+
+ 	var marker1 = L.marker([latitude,longitude]).addTo(mymap);
+		
+var group = new L.featureGroup([marker1]);
+
+mymap.fitBounds(group.getBounds());
+    var img = new Image();
+    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+  }
+
+  function error() {
+    output.innerHTML = "Unable to retrieve your location";
+  }
+
+  console.log(navigator.geolocation);
+ navigator.geolocation.getCurrentPosition(success, error);
+	
+	
+	
+
+}
+
+window.cb = function cb(json) {
+			//do what you want with the json	
+document.getElementById('locationOutput').innerHTML = '<b>'+json.address.road + ',' + json.address.city+'</b>';
+	}
+
+	window.search = function search() {
+			var s = document.createElement('script');    
+
+var latsOut=document.getElementById("outlat").innerText;
+var longsOut=document.getElementById("outlong").innerText;
+	
+		s.src = 'https://nominatim.openstreetmap.org/reverse?json_callback=cb&format=json&lat='+latsOut+'&lon='+longsOut+'&zoom=27&addressdetails=1';
+			document.getElementsByTagName('head')[0].appendChild(s);
+		
+		var currentDate = Date()
+		
+		document.getElementById("time").innerHTML = '<b>'+currentDate+'</b>';
+		
+		return latsOut
+		return longsOut
+
+	};
+
+</script>
+
+<style>
+.container{
+	display: grid;
+	grid-gap: 20px;
+	height: 97vh;
+  width: 97vw;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 350px auto;
+	grid-template-areas: 
+		"blockOne blockTwo"
+		"blockThree blockThree"
+}
+
+.block1{
+	grid-area: blockOne;
+}
+
+.block2{
+	grid-area: blockTwo;
+}
+
+.block3{
+	grid-area: blockThree;
+}
+
+.block4{
+	grid-area: blockFour;
+}
+
+.block1{
+	height: 100%;
+}
+
+.item:hover{
+	background-color: lightblue;
+	transition: ease 0.3s; 
+}
+
+*{
+	transition: ease 0.3s; 
+}
+
+.back{
+	background-color: black;
+	width: 250px;
+	height: 250px;
+	border-radius: 150px;
+	margin: 0 auto;
+ 	position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+	box-shadow: 5px 5px;
+	background-image: url("https://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/arrow-back-icon.png");
+	background-position: center;
+	background-size: 230px;
+	background-repeat: no-repeat;
+transition: 0.50s ease;
+}
+
+.back:hover{
+	transition: 0.50s ease;
+	background-color: whitesmoke;
+}
+
+.infoBox{
+	background-image: white;
+	width: 400px;
+	height: 250px;
+	margin: 0 auto;
+ 	position: relative;
+  top: 50%;
+	padding-left: 30px;
+  line-height: 150%;
+	overflow-y:auto;
+	transform: translateY(-50%);
+	margin-left: 5%;
+}
+
+.item{
+	background-color: whitesmoke;
+	border: 0px solid black;
+	box-shadow: 5px 5px;
+}
+
+#userLoc{
+	height: 100%;
+}
+
+</style>
