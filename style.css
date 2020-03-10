@@ -15,27 +15,24 @@
 	background-color: whitesmoke;
 	border: 0px solid black;
 	box-shadow: 5px 5px;
-  position:relative;padding:50px 0px 0px 0px;
+  position:relative;
+padding:50px 0px;
 }
 
 .block1{
 	grid-area: blockOne;
-  	height: 100%;
 }
 
 .block2{
 	grid-area: blockTwo;
-	height: 100%;
 }
 
 .block3{
 	grid-area: blockThree;
-	height: 100%;
 }
 
 .block4{
 	grid-area: blockFour;
-	height: 100%;
 }
 
 .item:hover{
