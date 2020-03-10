@@ -72,13 +72,17 @@ transition: 0.70s ease;
 	border-radius: 150px;
 	margin: 0 auto;
  	position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+	top: 50%;
+	transform: translateY(-50%);
 	box-shadow: 5px 5px;
 	background-image: url("https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/5851494071557740370-512.png");
 	background-size: cover;
 	background-position: center;
 	background-size: 100px;
+	text-align: center;
+	height: 300px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .info:hover{
