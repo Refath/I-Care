@@ -8,6 +8,7 @@
 	grid-template-areas: 
 		"blockOne blockTwo"
 		"blockThree blockFour"
+
 }
 
 .item{
@@ -80,9 +81,9 @@ transition: 0.70s ease;
 	background-position: center;
 	background-size: 100px;
 	text-align: center;
-	height: 300px;
-	display: table-cell;
-	vertical-align: middle;
+	  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .info:hover{
